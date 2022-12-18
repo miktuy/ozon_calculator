@@ -28,9 +28,12 @@ class ShipmentPointType {
         apply: this.page.locator('button', {hasText: 'Применить'}),
       },
       options: {
-        receivingDeliveringPoint: this.page.locator('//div[@aria-labelledby="input-186"]').first(),
-        sortingCenter: this.page.locator('//div[@aria-labelledby="input-186"]').nth(1),
-        transitSortingCenter: this.page.locator('//div[@aria-labelledby="input-186"]').last(),
+        receivingDeliveringPoint: this.page
+          .locator('label', {hasText: 'ППЗ/ПВЗ – пункт приёма/выдачи заказов'}),
+        sortingCenter: this.page
+          .locator('label', {hasText: 'СЦ – сортировочный центр'}),
+        transitSortingCenter: this.page
+          .locator('label', {hasText: 'ТСЦ – транзитный  сортировочный центр'})
       }
     }
   }
@@ -39,6 +42,28 @@ class ShipmentPointType {
     await expect(this.page.locator('//div[@role="dialog"]')).toContainText('Выберите кластер')
   }
 
+  async selectType(pointType: string) {
+    await this.modalShouldBeOpened();
+    switch (pointType) {
+      case 'ППЗ': {
+        await this.modal.options.receivingDeliveringPoint.click();
+        break;
+      }
+      case 'СЦ': {
+        await this.modal.options.sortingCenter.click();
+        break;
+      }
+      case 'ТСЦ': {
+        await this.modal.options.transitSortingCenter.click();
+        break;
+      }
+    }
+    await this.modal.buttons.apply.click();
+  }
+
+  async currentTypeShouldBe(pointType: string) {
+    await expect(this.currentType).toHaveAttribute('title', pointType)
+  }
 }
 
 export class ObligatoryFBS {
@@ -52,19 +77,19 @@ export class ObligatoryFBS {
     itemsInShipmentCurrier: SmartInput,
     shipmentInDelivering: SmartInput,
   }
-  modal: ShipmentPointType;
+  type: ShipmentPointType;
 
   constructor(page: Page) {
     this.page = page;
-    this.modal = new ShipmentPointType(page);
+    this.type = new ShipmentPointType(page);
     this.buttons = {
       shipmentToReceivingPoint: page.locator('//a[@href="#drop-off"]'),
       shipmentToOzonCurrier: page.locator('//a[@href="#pick-up"]'),
     }
     this.inputs = {
-      itemsInShipmentReceivingPoint: new SmartInput(page, 'input-109'),
-      itemsInShipmentCurrier: new SmartInput(page, 'input-203'),
-      shipmentInDelivering: new SmartInput(page, 'input-208'),
+      itemsInShipmentReceivingPoint: new SmartInput(page, 'Товары в отправлении, шт.'),
+      itemsInShipmentCurrier: new SmartInput(page, 'Товары в отправлении, шт.', 1),
+      shipmentInDelivering: new SmartInput(page, 'Отправления в отгрузке, шт.'),
     }
   }
 }
