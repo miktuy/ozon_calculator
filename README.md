@@ -1,8 +1,8 @@
-#TEST SAMPLE FOR OZON CALCULATOR
+# TEST SAMPLE FOR OZON CALCULATOR
 Simple test examples for webapp at https://calculator.ozon.ru/
 
 
-###Used Page Object Model approach with separated blocks
+### Used Page Object Model approach with separated blocks
 
 1. Page is described in [/pages/calculator/calculator.ts](pages/calculator/calculator.ts)
 with two blocks: for dimensions settings and for obligatory FBS settings
@@ -12,10 +12,10 @@ with two blocks: for dimensions settings and for obligatory FBS settings
 [ShipmentPointType](pages/calculator/blocks/obligatoryFBS.ts)
 
 
-###How To Run
+### How To Run
 1. Install dependencies `npm ci`
 2. Install Playwright Browsers `npx playwright install --with-deps`
 3. Run Playwright tests `npx playwright test`.
 
-###Reports
+### Reports
 To open last HTML report run: `npx playwright show-report`
