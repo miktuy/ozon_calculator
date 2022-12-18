@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/miktuy/ozon_calculator#readme",
   "devDependencies": {
-    "@playwright/test": "^1.29.0"
+    "@playwright/test": "^1.29.0",
+    "allure-playwright": "^2.0.0-beta.21"
   }
 }
